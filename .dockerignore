@@ -1,0 +1,17 @@
+# General
+node_modules
+__pycache__
+*.pyc
+dist
+build
+.vscode
+.env
+.DS_Store
+
+# OneDrive stuff
+*.lnk
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

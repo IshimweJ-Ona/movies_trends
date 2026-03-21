@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: moviestream-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    networks:
+      - moviestream-network
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://backend:8000/api
+    container_name: moviestream-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - moviestream-network
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api
+    user: root
+    command: bash -lc "chmod -R 755 /app/src/styles && npm run dev -- --host 0.0.0.0 --port 5173"
+
+networks:
+  moviestream-network:
+    driver: bridge
