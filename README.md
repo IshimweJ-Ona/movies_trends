@@ -115,10 +115,28 @@ docker-compose up --build
 # Run in background
 docker-compose up -d
 ```
-# Delete all containers + volumes + networks
-```bash
-docker system prune -a --volumes
-```
+### Option 3: Render Deployment
+
+This project is configured for easy deployment on Render using the provided `render.yaml` blueprint.
+
+1. **Fork or clone this repository to GitHub**
+
+2. **Connect to Render**:
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New" > "Blueprint"
+   - Connect your GitHub repository
+   - Render will automatically detect the `render.yaml` file
+
+3. **Set Environment Variables**:
+   - In the Render dashboard, go to your backend service
+   - Add `TMDB_API_KEY` as an environment variable with your TMDB API key
+
+4. **Deploy**:
+   - Click "Create" to deploy both services
+   - The frontend will be available at the static site URL
+   - The backend API will be available at the web service URL
+
+Note: The `render.yaml` configures the services to communicate with each other automatically.
 ## Running the Application
 
 ### Local Development
