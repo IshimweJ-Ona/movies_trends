@@ -1,5 +1,5 @@
 services:
-  - type: web_service
+  - type: web
     name: moviestream-backend
     runtime: docker
     dockerfilePath: backend/Dockerfile
@@ -12,16 +12,14 @@ services:
     healthCheckPath: /api/genres
     plan: starter
 
-  - type: static_site
+  - type: static
     name: moviestream-frontend
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          name: moviestream-backend
-          property: url
+        value: https://<backend-service>.onrender.com/api
     routes:
       - type: rewrite
         source: /*
