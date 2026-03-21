@@ -15,8 +15,14 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Expose port 5173 for dev
-EXPOSE 5173
+# Build the application
+RUN npm run build
+
+# Expose port 3000 for production
+EXPOSE 3000
+
+# Serve the built application
+CMD ["npx", "serve", "dist", "-l", "3000", "-s"]
 
 # Default command (can be overridden by compose for dev or build)
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
