@@ -64,7 +64,7 @@ async def root():
     """Health check endpoint"""
     return {"status": "ok", "message": "MovieStream API is running"}
 
-@app.get("/genres")
+@app.get("/api/genres")
 async def get_genres():
     """Return list of movie genres with caching"""
     if "genres" in genres_cache:
@@ -76,7 +76,7 @@ async def get_genres():
     genres_cache["genres"] = data
     return data
 
-@app.get("/movies")
+@app.get("/api/movies")
 async def get_movies(
     q: str = Query("", description="Search query"),
     genre: str = Query("all", description="Filter by genre ID"),
@@ -116,7 +116,7 @@ async def get_movies(
     movies_cache[cache_key] = data
     return data
 
-@app.get("/movies/{movie_id}/videos")
+@app.get("/api/movies/{movie_id}/videos")
 async def get_movie_videos(movie_id: int):
     """Get only official Youtube trailers for a movie with caching"""
     cache_key = f"videos_{movie_id}"
@@ -147,9 +147,9 @@ async def get_movie_videos(movie_id: int):
     return result
 
 # ------------------------------
-# Health check\
+# Health check
 # ------------------------------
-@app.get("/health")
+@app.get("/api/health")
 async def health_check():
     return {"status": "ok"}
 
