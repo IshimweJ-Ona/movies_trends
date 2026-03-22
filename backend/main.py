@@ -59,7 +59,12 @@ def build_url(endpoint: str, params: Optional[Dict[Union[str, int], Union[str, i
 # ------------------------------
 # API Endpoints
 # ------------------------------
-@app.get("/api/genres")
+@app.get("/")
+async def root():
+    """Health check endpoint"""
+    return {"status": "ok", "message": "MovieStream API is running"}
+
+@app.get("/genres")
 async def get_genres():
     """Return list of movie genres with caching"""
     if "genres" in genres_cache:
@@ -71,7 +76,7 @@ async def get_genres():
     genres_cache["genres"] = data
     return data
 
-@app.get("/api/movies")
+@app.get("/movies")
 async def get_movies(
     q: str = Query("", description="Search query"),
     genre: str = Query("all", description="Filter by genre ID"),
@@ -111,7 +116,7 @@ async def get_movies(
     movies_cache[cache_key] = data
     return data
 
-@app.get("/api/movies/{movie_id}/videos")
+@app.get("/movies/{movie_id}/videos")
 async def get_movie_videos(movie_id: int):
     """Get only official Youtube trailers for a movie with caching"""
     cache_key = f"videos_{movie_id}"
@@ -144,7 +149,7 @@ async def get_movie_videos(movie_id: int):
 # ------------------------------
 # Health check\
 # ------------------------------
-@app.get("/api/health")
+@app.get("/health")
 async def health_check():
     return {"status": "ok"}
 
