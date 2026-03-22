@@ -104,10 +104,10 @@ TMDB_API_KEY=your_tmdb_api_key_here
 
 Optionally, you can also use a project root `.env` file with the same variable if you run commands from root.
 
-### Option 2: Docker Deployment
+### Option 2: Docker Deployment with Nginx
 
 ```bash
-# Ensure .env file exists in root directory with TMDB_API_KEY
+# Ensure .env file exists in backend/ with TMDB_API_KEY
 
 # Build and start all services
 docker-compose up --build
@@ -115,28 +115,9 @@ docker-compose up --build
 # Run in background
 docker-compose up -d
 ```
-### Option 3: Render Deployment
 
-This project is configured for easy deployment on Render using the provided `render.yaml` blueprint.
+The application will be available at `http://localhost:3000` (frontend container serves on port 3000, backend on 8000).
 
-1. **Fork or clone this repository to GitHub**
-
-2. **Connect to Render**:
-   - Go to [Render Dashboard](https://dashboard.render.com)
-   - Click "New" > "Blueprint"
-   - Connect your GitHub repository
-   - Render will automatically detect the `render.yaml` file
-
-3. **Set Environment Variables**:
-   - In the Render dashboard, go to your backend service
-   - Add `TMDB_API_KEY` as an environment variable with your TMDB API key
-
-4. **Deploy**:
-   - Click "Create" to deploy both services
-   - The frontend will be available at the static site URL
-   - The backend API will be available at the web service URL
-
-Note: The `render.yaml` configures the services to communicate with each other automatically.
 ## Running the Application
 
 ### Local Development
@@ -161,9 +142,8 @@ The application will be available at `http://localhost:5173`
 ```bash
 docker-compose up
 
-# Backend: http://localhost:8000
-# Frontend: http://localhost:3000
-# API Docs: http://localhost:8000/docs
+# Frontend: http://localhost:3000 (served by container)
+# Backend API: http://localhost:8000/docs (internal, for debugging)
 ```
 
 ## API Endpoints
@@ -212,7 +192,7 @@ PYTHONUNBUFFERED=1
 ```
 
 ### Frontend Configuration
-The frontend automatically connects to the backend at `http://backend:8000` when running in Docker, or `http://localhost:8000` in local development.
+The frontend is served by the container on port 3000 with base path `/movie_trends/` to match the server's nginx configuration.
 
 ## Troubleshooting
 
