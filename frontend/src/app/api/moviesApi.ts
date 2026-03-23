@@ -44,19 +44,22 @@ const ensureLeadingSlash = (value: string) => (value.startsWith('/') ? value : `
 const buildUrl = (path: string, params?: Record<string, string | number | undefined>) => {
   const normalizedPath = ensureLeadingSlash(path);
   const apiPath = API_BASE ? normalizedPath : `/api${normalizedPath}`;
-  const url = API_BASE
-    ? new URL(`${API_BASE}${apiPath}`)
-    : new URL(apiPath, window.location.origin);
+  
+  let url = `${API_BASE ?? ''}${apiPath}`;
 
   if (params) {
-    Object.entries(params).forEach(([key, value]) => {
+    const searchParams = new URLSearchParams();
+    Object.entries(params).forEach(([keyframes, value]) => {
       if (value !== undefined && value !== '') {
-        url.searchParams.set(key, String(value));
+        searchParams.set(keyframes, String(value));
       }
     });
+    if (searchParams.toString()) {
+      url += `?${searchParams.toString()}`;
+    }
   }
 
-  return url.toString();
+  return url;
 };
 
 const request = async <T>(path: string, params?: Record<string, string | number | undefined>, signal?: AbortSignal): Promise<T> => {
