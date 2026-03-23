@@ -2,9 +2,11 @@ FROM node:20
 
 WORKDIR /app
 
-# Build-time API URL
-ARG VITE_API_BASE_URL=/api
+# Build-time config
+ARG VITE_API_BASE_URL=/movie_trends/api
+ARG VITE_BASE_PATH=/movie_trends/
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
+ENV VITE_BASE_PATH=${VITE_BASE_PATH}
 
 COPY package.json package-lock.json ./
 

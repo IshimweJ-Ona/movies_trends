@@ -116,7 +116,7 @@ docker-compose up --build
 docker-compose up -d
 ```
 
-The application will be available at `http://localhost:3000` (frontend container serves on port 3000, backend on 8000).
+The application will be available at `http://localhost:5173` (frontend container serves on port 5173, backend on 8000).
 
 ## Running the Application
 
@@ -142,7 +142,7 @@ The application will be available at `http://localhost:5173`
 ```bash
 docker-compose up
 
-# Frontend: http://localhost:3000 (served by container)
+# Frontend: http://localhost:5173 (served by container)
 # Backend API: http://localhost:8000/docs (internal, for debugging)
 ```
 
@@ -192,7 +192,8 @@ PYTHONUNBUFFERED=1
 ```
 
 ### Frontend Configuration
-The frontend is served by the container on port 3000 with base path `/movie_trends/` to match the server's nginx configuration.
+The frontend is served by the container on port 5173 with base path `/movie_trends/` to match the server's nginx configuration.
+See `deploy/nginx-movie_trends.conf`.
 
 ## Troubleshooting
 

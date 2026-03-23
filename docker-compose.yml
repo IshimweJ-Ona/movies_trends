@@ -19,6 +19,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /movie_trends/api
+        VITE_BASE_PATH: /movie_trends/
     container_name: moviestream-frontend
     restart: unless-stopped
     ports:
