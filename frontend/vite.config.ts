@@ -5,40 +5,39 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   base: '/movie_trends/',
+
   plugins: [
-    // The React and Tailwind plugins are both required for Make, even if
-    // Tailwind is not being actively used - do not remove them
     react(),
     tailwindcss(),
   ],
+
   resolve: {
     alias: {
-      // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
     },
   },
+
   server: {
     proxy: {
       '/api': 'http://localhost:8000',
     },
-    // Disable caching during development
     middlewareMode: false,
     headers: {
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
     },
   },
+
   build: {
-    // Add timestamps to output files for cache busting
+    assetsDir: 'assets',
+
     rollupOptions: {
       output: {
-        entryFileNames: '[name]-[hash].js',
-        chunkFileNames: '[name]-[hash].js',
-        assetFileNames: '[name]-[hash][extname]',
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
       },
     },
   },
 
-  // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
-
