@@ -17,7 +17,7 @@ RUN npm run build
 # Install a simple static server
 RUN npm install -g serve
 
-EXPOSE 3000
+EXPOSE 5173
 
 # Use single-page mode properly
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["serve", "-s", "dist", "-l", "5173"]
